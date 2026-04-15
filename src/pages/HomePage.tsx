@@ -1,7 +1,14 @@
+import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { fetchCategories, fetchProducts } from "../api/products";
+import {
+  fetchCategories,
+  fetchProducts,
+  fetchProductsByCategory,
+} from "../api/products";
 
 function HomePage() {
+  const [selectedCategory, setSelectedCategory] = useState("");
+
   const {
     data: categories,
     isLoading: categoriesLoading,
@@ -16,8 +23,11 @@ function HomePage() {
     isLoading: productsLoading,
     isError: productsError,
   } = useQuery({
-    queryKey: ["products"],
-    queryFn: fetchProducts,
+    queryKey: ["products", selectedCategory],
+    queryFn: () =>
+      selectedCategory
+        ? fetchProductsByCategory(selectedCategory)
+        : fetchProducts(),
   });
 
   if (categoriesLoading || productsLoading) {
@@ -34,7 +44,11 @@ function HomePage() {
 
       <div style={{ margin: "1rem 0" }}>
         <label htmlFor="category">Category: </label>
-        <select id="category" defaultValue="">
+        <select
+          id="category"
+          value={selectedCategory}
+          onChange={(event) => setSelectedCategory(event.target.value)}
+        >
           <option value="">All Products</option>
           {categories?.map((category) => (
             <option key={category} value={category}>
