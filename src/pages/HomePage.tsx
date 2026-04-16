@@ -5,6 +5,7 @@ import {
   fetchProducts,
   fetchProductsByCategory,
 } from "../api/products";
+import ProductCard from "../components/ProductCard";
 
 function HomePage() {
   const [selectedCategory, setSelectedCategory] = useState("");
@@ -42,7 +43,7 @@ function HomePage() {
     <section>
       <h2>Product Catalog</h2>
 
-      <div style={{ margin: "1rem 0" }}>
+      <div className="catalog-filter">
         <label htmlFor="category">Category: </label>
         <select
           id="category"
@@ -58,30 +59,9 @@ function HomePage() {
         </select>
       </div>
 
-      <div>
+      <div className="product-grid">
         {products?.map((product) => (
-          <article
-            key={product.id}
-            style={{
-              border: "1px solid #d1d5db",
-              borderRadius: "8px",
-              padding: "1rem",
-              marginBottom: "1rem",
-              background: "#ffffff",
-            }}
-          >
-            <img
-              src={product.image}
-              alt={product.title}
-              style={{ width: "120px", height: "120px", objectFit: "contain" }}
-            />
-            <h3>{product.title}</h3>
-            <p>{product.category}</p>
-            <p>{product.description}</p>
-            <p>${product.price.toFixed(2)}</p>
-            <p>Rating: {product.rating.rate}</p>
-            <button type="button">Add to Cart</button>
-          </article>
+          <ProductCard key={product.id} product={product} />
         ))}
       </div>
     </section>
