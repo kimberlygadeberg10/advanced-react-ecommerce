@@ -1,3 +1,5 @@
+import { addToCart } from "../store/cartSlice";
+import { useAppDispatch } from "../store/hooks";
 import type { Product } from "../types/product";
 
 interface ProductCardProps {
@@ -5,6 +7,8 @@ interface ProductCardProps {
 }
 
 function ProductCard({ product }: ProductCardProps) {
+  const dispatch = useAppDispatch();
+
   return (
     <article className="product-card">
       <img
@@ -12,7 +16,8 @@ function ProductCard({ product }: ProductCardProps) {
         src={product.image}
         alt={product.title}
         onError={(event) => {
-          event.currentTarget.src = `https://via.placeholder.com/200x200?text=Product+Image`;
+          event.currentTarget.src =
+            "https://via.placeholder.com/200x200?text=Product+Image";
         }}
       />
 
@@ -29,7 +34,9 @@ function ProductCard({ product }: ProductCardProps) {
           <strong>Rating:</strong> {product.rating.rate}
         </p>
 
-        <button type="button">Add to Cart</button>
+        <button type="button" onClick={() => dispatch(addToCart(product))}>
+          Add to Cart
+        </button>
       </div>
     </article>
   );
