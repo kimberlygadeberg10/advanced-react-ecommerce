@@ -9,6 +9,11 @@ import { store } from "./store/store";
 
 const queryClient = new QueryClient();
 
+store.subscribe(() => {
+  const state = store.getState();
+  sessionStorage.setItem("cart", JSON.stringify(state.cart.items));
+});
+
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <Provider store={store}>

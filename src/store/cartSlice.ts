@@ -17,7 +17,28 @@ const getInitialCartItems = (): CartItem[] => {
   }
 
   try {
-    return JSON.parse(storedCart) as CartItem[];
+    const parsedCart = JSON.parse(storedCart);
+
+    if (!Array.isArray(parsedCart)) {
+      return [];
+    }
+
+    return parsedCart.filter(
+      (item): item is CartItem =>
+        typeof item === "object" &&
+        item !== null &&
+        typeof item.id === "number" &&
+        typeof item.title === "string" &&
+        typeof item.price === "number" &&
+        typeof item.description === "string" &&
+        typeof item.category === "string" &&
+        typeof item.image === "string" &&
+        typeof item.quantity === "number" &&
+        typeof item.rating === "object" &&
+        item.rating !== null &&
+        typeof item.rating.rate === "number" &&
+        typeof item.rating.count === "number",
+    );
   } catch {
     return [];
   }
