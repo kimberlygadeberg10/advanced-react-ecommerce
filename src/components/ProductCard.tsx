@@ -6,6 +6,8 @@ interface ProductCardProps {
   product: Product;
 }
 
+const fallbackImageUrl = "https://placehold.co/200x200?text=Product+Image";
+
 function ProductCard({ product }: ProductCardProps) {
   const dispatch = useAppDispatch();
 
@@ -13,11 +15,11 @@ function ProductCard({ product }: ProductCardProps) {
     <article className="product-card">
       <img
         className="product-card__image"
-        src={product.image}
+        src={product.image || fallbackImageUrl}
         alt={product.title}
         onError={(event) => {
-          event.currentTarget.src =
-            "https://via.placeholder.com/200x200?text=Product+Image";
+          event.currentTarget.onerror = null;
+          event.currentTarget.src = fallbackImageUrl;
         }}
       />
 

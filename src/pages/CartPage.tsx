@@ -2,6 +2,8 @@ import { useState } from "react";
 import { clearCart, removeFromCart } from "../store/cartSlice";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 
+const fallbackImageUrl = "https://placehold.co/120x120?text=Product+Image";
+
 function CartPage() {
   const dispatch = useAppDispatch();
   const cartItems = useAppSelector((state) => state.cart.items);
@@ -37,11 +39,11 @@ function CartPage() {
               <article key={item.id} className="cart-item">
                 <img
                   className="cart-item__image"
-                  src={item.image}
+                  src={item.image || fallbackImageUrl}
                   alt={item.title}
                   onError={(event) => {
-                    event.currentTarget.src =
-                      "https://via.placeholder.com/120x120?text=Product+Image";
+                    event.currentTarget.onerror = null;
+                    event.currentTarget.src = fallbackImageUrl;
                   }}
                 />
 
