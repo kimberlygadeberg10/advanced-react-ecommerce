@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import ProductCard from "../components/ProductCard";
+import ProductForm from "../components/ProductForm";
 import { getProducts } from "../firebase/products";
 
 function HomePage() {
@@ -22,6 +23,8 @@ function HomePage() {
 
   return (
     <section>
+      <ProductForm />
+
       <h2>Product Catalog</h2>
 
       <div className="product-grid">

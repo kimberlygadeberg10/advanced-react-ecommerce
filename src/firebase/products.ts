@@ -9,6 +9,8 @@ import {
 import { db } from "./config";
 import type { Product } from "../types/product";
 
+type ProductInput = Omit<Product, "id">;
+
 const productsCollection = collection(db, "products");
 
 export async function getProducts() {
@@ -20,11 +22,11 @@ export async function getProducts() {
   })) as Product[];
 }
 
-export async function createProduct(product: Omit<Product, "id">) {
+export async function createProduct(product: ProductInput) {
   await addDoc(productsCollection, product);
 }
 
-export async function updateProduct(id: string, product: Omit<Product, "id">) {
+export async function updateProduct(id: string, product: ProductInput) {
   await updateDoc(doc(db, "products", id), product);
 }
 

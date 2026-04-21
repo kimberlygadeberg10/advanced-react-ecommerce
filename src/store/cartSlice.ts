@@ -27,7 +27,7 @@ const getInitialCartItems = (): CartItem[] => {
       (item): item is CartItem =>
         typeof item === "object" &&
         item !== null &&
-        typeof item.id === "number" &&
+        typeof item.id === "string" &&
         typeof item.title === "string" &&
         typeof item.price === "number" &&
         typeof item.description === "string" &&
@@ -66,7 +66,7 @@ const cartSlice = createSlice({
         });
       }
     },
-    removeFromCart: (state, action: PayloadAction<number>) => {
+    removeFromCart: (state, action: PayloadAction<string>) => {
       const existingItem = state.items.find(
         (item) => item.id === action.payload,
       );
