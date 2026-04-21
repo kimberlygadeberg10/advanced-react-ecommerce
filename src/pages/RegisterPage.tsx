@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { registerUser } from "../firebase/auth";
+import { getAuthErrorMessage } from "../firebase/getAuthErrorMessage";
 
 function RegisterPage() {
   const navigate = useNavigate();
@@ -15,8 +16,8 @@ function RegisterPage() {
     try {
       await registerUser(email, password);
       navigate("/");
-    } catch {
-      setErrorMessage("Registration failed. Please try again.");
+    } catch (error) {
+      setErrorMessage(getAuthErrorMessage(error));
     }
   };
 

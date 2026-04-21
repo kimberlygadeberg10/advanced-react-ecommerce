@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { loginUser } from "../firebase/auth";
+import { getAuthErrorMessage } from "../firebase/getAuthErrorMessage";
 
 function LoginPage() {
   const navigate = useNavigate();
@@ -15,8 +16,8 @@ function LoginPage() {
     try {
       await loginUser(email, password);
       navigate("/");
-    } catch {
-      setErrorMessage("Login failed. Please check your email and password.");
+    } catch (error) {
+      setErrorMessage(getAuthErrorMessage(error));
     }
   };
 
