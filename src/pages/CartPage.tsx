@@ -1,13 +1,18 @@
 import { useState } from "react";
 import { clearCart, removeFromCart } from "../store/cartSlice";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
+import { useAuth } from "../context/useAuth";
+import { createOrder } from "../firebase/orders";
 
 const fallbackImageUrl = "https://placehold.co/120x120?text=Product+Image";
 
 function CartPage() {
   const dispatch = useAppDispatch();
   const cartItems = useAppSelector((state) => state.cart.items);
+  const { user } = useAuth();
   const [checkoutMessage, setCheckoutMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+  const [isCheckingOut, setIsCheckingOut] = useState(false);
 
   const totalProducts = cartItems.reduce(
     (total, item) => total + item.quantity,
@@ -19,9 +24,33 @@ function CartPage() {
     0,
   );
 
-  const handleCheckout = () => {
-    dispatch(clearCart());
-    setCheckoutMessage("Checkout successful! Your cart has been cleared.");
+  const handleCheckout = async () => {
+    setCheckoutMessage("");
+    setErrorMessage("");
+
+    if (!user) {
+        setErrorMessage("You must be logged in to place an order.");
+        return;
+    }
+
+    try {
+        setIsCheckingOut(true);
+
+        await createOrder({
+            userId: user.uid,
+            items: cartItems,
+            totalProducts,
+            totalPrice,
+        });
+
+        dispatch(clearCart());
+        setCheckoutMessage("Order placed successfully and cart was cleared.");
+    } catch (error) {
+        console.error("Checkout error:", error);
+        setErrorMessage("Could not place your order.");
+    } finally {
+        setIsCheckingOut(false);
+    }
   };
 
   return (
@@ -29,6 +58,7 @@ function CartPage() {
       <h2>Shopping Cart</h2>
 
       {checkoutMessage && <p className="cart-success">{checkoutMessage}</p>}
+      {errorMessage && <p className="auth-error">{errorMessage}</p>}
 
       {cartItems.length === 0 ? (
         <p className="cart-empty">Your cart is currently empty.</p>
@@ -72,8 +102,12 @@ function CartPage() {
               <strong>Total Price:</strong> ${totalPrice.toFixed(2)}
             </p>
 
-            <button type="button" onClick={handleCheckout}>
-              Checkout
+            <button 
+            type="button"
+            onClick={handleCheckout}
+            disabled={isCheckingOut}
+            >
+              {isCheckingOut ? "Processing..." : "Checkout"}
             </button>
           </div>
         </>
