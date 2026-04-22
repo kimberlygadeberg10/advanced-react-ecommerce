@@ -1,39 +1,47 @@
-# Advanced React E-Commerce App
+# Advanced React E-Commerce App with Firebase
 
-This project is an advanced e-commerce web app that I built with React, TypeScript, Vite, React Query, and Redux Toolkit. I created it as part of a module project to practice working with APIs, state management, routing, and data persistence in a more realistic React application.
+This project is an advanced e-commerce web app built with React, TypeScript, Vite, Redux Toolkit, React Query, and Firebase. I originally started the project using the FakeStore API, and then updated it to use Firebase Authentication and Firestore for user data, products, and orders.
 
-The app uses the FakeStoreAPI to load product and category data. Users can browse products, filter them by category, add items to a shopping cart, remove items from the cart, and complete a fake checkout.
+The app allows users to register, log in, manage their profile, browse products, add products, edit and delete products, use a shopping cart, place orders, and view their order history.
 
 ## What This Project Does
 
-This app works like a simple online store. It shows products from an API on the home page and lets the user interact with them through a shopping cart.
+This app works like a simple online store. Users can create an account, log in, browse products, add items to their cart, and place an order. Product and user data are stored in Firebase Firestore instead of using an external API.
 
 Main features include:
 
-- displaying all store products on the home page
-- showing product title, price, category, description, rating, and image
-- loading categories dynamically from the API
-- filtering products by category with a dropdown
-- adding products to the cart
-- removing products from the cart
-- showing total quantity of items in the cart
-- showing total price of items in the cart
-- simulating checkout by clearing the cart
+- user registration with email and password
+- user login and logout
+- creating a user document in Firestore when a new account is registered
+- viewing and updating a user profile
+- deleting a user account and Firestore profile data
+- fetching products from Firestore
+- adding new products
+- editing existing products
+- deleting products
+- adding products to a shopping cart
+- removing one item at a time from the cart
+- showing total quantity and total price in the cart
 - saving cart data in `sessionStorage`
-- showing a fallback placeholder image if an API image fails to load
+- placing orders and saving them in Firestore
+- viewing order history
+- viewing individual order details
+- showing fallback placeholder images when product image links do not load
 
 ## What I Learned
 
-This project helped me practice a lot of important React concepts. Some of the main things I worked on were:
+This project helped me practice a lot of important React and Firebase concepts. Some of the main things I worked on were:
 
 - setting up a React project with TypeScript using Vite
-- using React Router to move between pages
-- using React Query to fetch API data
-- using Redux Toolkit to manage shopping cart state
+- using React Router for page navigation
+- using Redux Toolkit for cart state management
+- using React Query for data loading and refresh
+- working with Firebase Authentication
+- storing and reading data from Firestore
 - creating reusable components
-- working with TypeScript interfaces for product data
-- using `sessionStorage` to keep cart data after refreshing
-- debugging layout issues and runtime errors
+- using TypeScript interfaces for products, users, and orders
+- using `sessionStorage` for cart persistence
+- debugging Firebase setup issues and TypeScript errors
 
 ## Tech Stack
 
@@ -43,27 +51,30 @@ This project was built with:
 - TypeScript
 - Vite
 - React Router DOM
-- React Query
 - Redux Toolkit
 - React Redux
-- FakeStoreAPI
+- React Query
+- Firebase Authentication
+- Firebase Firestore
 
-## API Endpoints Used
+## Firebase Features Used
 
-The app uses these FakeStoreAPI endpoints:
+This app uses Firebase for:
 
-- `https://fakestoreapi.com/products`
-- `https://fakestoreapi.com/products/categories`
-- `https://fakestoreapi.com/products/category/{category}`
+- Authentication with email and password
+- Firestore user documents
+- Firestore product collection
+- Firestore orders collection
 
 ## Project Structure
 
-Here is the basic folder structure I used:
+Here is the main folder structure used in this project:
 
-- `src/api` for API request functions
 - `src/components` for reusable UI components
 - `src/pages` for page components
-- `src/store` for Redux store setup and cart slice
+- `src/store` for Redux Toolkit state
+- `src/firebase` for Firebase config and Firestore functions
+- `src/context` for authentication context
 - `src/types` for shared TypeScript types
 
 ## How to Run the Project
@@ -78,29 +89,52 @@ npm install
 Start the development server:
 npm run dev
 Open the local Vite URL in your browser.
+Firebase Setup
+To run this project, Firebase must be set up first.
+
+Firebase steps:
+Create a Firebase project in the Firebase Console.
+Add a web app to the Firebase project.
+Enable Authentication.
+Enable Email/Password sign-in.
+Create a Firestore Database.
+Add your Firebase config to the project.
+Firestore collections used:
+users
+products
+orders
+Firestore rules for testing
+During development, Firestore may need test rules enabled so reads and writes work while building the app.
 
 How to Use the App
-Open the home page.
-Browse the list of products.
-Use the category dropdown to filter products.
-Click Add to Cart on any product.
-Click the cart link in the navigation bar to open the cart page.
-View the items in your cart.
+Register a new account.
+Log in with your email and password.
+Browse products on the Home page.
+Add products to the cart.
+Open the cart page to review items.
 Remove items if needed.
-Click Checkout to clear the cart and simulate completing a purchase.
+Checkout to place an order.
+Open the Orders page to view previous orders.
+Open the Profile page to update your name and address.
+Use the Add Product page to create products.
+Edit or delete products from the product list.
 Notes
-Some of the image links from FakeStoreAPI may not work because of API-side issues. To handle this, I added a fallback placeholder image so the layout still looks clean even when an image is broken.
+This app includes image fallback handling. If a product image URL does not load, a placeholder image is shown instead so the layout still looks clean.
 
-The checkout in this app is only simulated because FakeStoreAPI does not actually process real orders.
+The cart is stored in sessionStorage, so cart items remain after refreshing the page until checkout clears the cart.
+
+Order timestamps in Firestore may briefly show as pending right after checkout until Firebase finishes writing the server timestamp.
 
 Future Improvements
-If I keep working on this project later, some things I would like to improve are:
+If I continue working on this project later, some things I would like to improve are:
 
-add better styling and a more polished design
-add quantity increase and decrease buttons in the cart
-add loading spinners and better error messages
-add a product details page
-improve accessibility
+add stronger Firestore security rules
+restrict product management to admin users only
+improve product image handling with Firebase Storage
+add better validation messages for forms
+improve styling and responsiveness more
+add loading spinners and better success/error states
+add search and category filtering back into the Firebase version
 add tests
 Author
-Created by Kimberly Gadeberg as a learning project for an advanced React module assignment.
+Created by Kimberly Gadeberg as a learning project for an advanced React e-commerce assignment using Firebase.
