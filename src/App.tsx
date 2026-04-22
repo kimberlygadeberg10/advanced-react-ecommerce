@@ -5,6 +5,7 @@ import CartPage from "./pages/CartPage";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import ProfilePage from "./pages/ProfilePage";
+import AddProductPage from "./pages/AddProductPage";
 import { useAppSelector } from "./store/hooks";
 import { useAuth } from "./context/useAuth";
 import { logoutUser } from "./firebase/auth";
@@ -34,6 +35,7 @@ function App() {
             {user ? (
               <>
                 <Link to="/profile">Profile</Link>
+                <Link to="/add-product">Add Product</Link>
                 <button type="button" onClick={logoutUser}>
                   Logout
                 </button>
@@ -53,6 +55,7 @@ function App() {
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/profile" element={<ProfilePage />} />
+          <Route path="/add-product" element={<AddProductPage />} />
         </Routes>
       </div>
     </main>
