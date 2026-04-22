@@ -3,8 +3,10 @@ import { clearCart, removeFromCart } from "../store/cartSlice";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { useAuth } from "../context/useAuth";
 import { createOrder } from "../firebase/orders";
-
-const fallbackImageUrl = "https://placehold.co/120x120?text=Product+Image";
+import {
+  getFallbackProductImage,
+  getProductImageSrc,
+} from "../utils/productImages";
 
 function CartPage() {
   const dispatch = useAppDispatch();
@@ -69,11 +71,14 @@ function CartPage() {
               <article key={item.id} className="cart-item">
                 <img
                   className="cart-item__image"
-                  src={item.image || fallbackImageUrl}
+                  src={getProductImageSrc(item.image, item.category, item.title)}
                   alt={item.title}
                   onError={(event) => {
                     event.currentTarget.onerror = null;
-                    event.currentTarget.src = fallbackImageUrl;
+                    event.currentTarget.src = getFallbackProductImage(
+                      item.category,
+                      item.title,
+                    );
                   }}
                 />
 

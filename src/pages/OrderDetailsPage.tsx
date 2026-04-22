@@ -1,8 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
 import { getOrderById } from "../firebase/orders";
-
-const fallbackImageUrl = "https://placehold.co/120x120?text=Product+Image";
+import {
+  getFallbackProductImage,
+  getProductImageSrc,
+} from "../utils/productImages";
 
 function OrderDetailsPage() {
   const { orderId } = useParams();
@@ -52,11 +54,14 @@ function OrderDetailsPage() {
           <article key={item.id} className="cart-item">
             <img
               className="cart-item__image"
-              src={item.image || fallbackImageUrl}
+              src={getProductImageSrc(item.image, item.category, item.title)}
               alt={item.title}
               onError={(event) => {
                 event.currentTarget.onerror = null;
-                event.currentTarget.src = fallbackImageUrl;
+                event.currentTarget.src = getFallbackProductImage(
+                  item.category,
+                  item.title,
+                );
               }}
             />
 

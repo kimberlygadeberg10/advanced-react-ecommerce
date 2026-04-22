@@ -4,12 +4,11 @@ import { addToCart } from "../store/cartSlice";
 import { useAppDispatch } from "../store/hooks";
 import type { Product } from "../types/product";
 import EditProductForm from "./EditProductForm";
+import { getFallbackProductImage, getProductImageSrc } from "../utils/productImages";
 
 interface ProductCardProps {
   product: Product;
 }
-
-const fallbackImageUrl = "https://placehold.co/200x200?text=Product+Image";
 
 function ProductCard({ product }: ProductCardProps) {
   const dispatch = useAppDispatch();
@@ -26,11 +25,14 @@ function ProductCard({ product }: ProductCardProps) {
     <article className="product-card">
       <img
         className="product-card__image"
-        src={product.image || fallbackImageUrl}
+        src={getProductImageSrc(product.image, product.category, product.title)}
         alt={product.title}
         onError={(event) => {
           event.currentTarget.onerror = null;
-          event.currentTarget.src = fallbackImageUrl;
+          event.currentTarget.src = getFallbackProductImage(
+            product.category,
+            product.title,
+          );
         }}
       />
 
