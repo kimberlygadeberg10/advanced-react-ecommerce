@@ -6,6 +6,8 @@ import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import ProfilePage from "./pages/ProfilePage";
 import AddProductPage from "./pages/AddProductPage";
+import OrdersPage from "./pages/OrdersPage";
+import OrderDetailsPage from "./pages/OrderDetailsPage";
 import { useAppSelector } from "./store/hooks";
 import { useAuth } from "./context/useAuth";
 import { logoutUser } from "./firebase/auth";
@@ -36,6 +38,7 @@ function App() {
               <>
                 <Link to="/profile">Profile</Link>
                 <Link to="/add-product">Add Product</Link>
+                <Link to="/orders">Orders</Link>
                 <button type="button" onClick={logoutUser}>
                   Logout
                 </button>
@@ -56,6 +59,8 @@ function App() {
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/add-product" element={<AddProductPage />} />
+          <Route path="/orders" element={<OrdersPage />} />
+          <Route path="/orders/:orderId" element={<OrderDetailsPage />} />
         </Routes>
       </div>
     </main>

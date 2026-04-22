@@ -346,3 +346,25 @@
   gap: 0.5rem;
   flex-wrap: wrap;
 }
+
+.orders-list {
+  display: grid;
+  gap: 1rem;
+}
+
+.order-card {
+  display: grid;
+  gap: 0.5rem;
+  padding: 1rem;
+  border: 1px solid #d1d5db;
+  border-radius: 10px;
+  background: #ffffff;
+}
+
+.order-card a {
+  width: fit-content;
+  text-decoration: none;
+  color: #2563eb;
+  font-weight: 600;
+}
+
