@@ -20,6 +20,7 @@ export async function registerUser(
         uid: userCredential.user.uid,
         email: userCredential.user.email,
         name: "",
+        address: "",
         createdAt: new Date().toISOString(),
     });
 
