@@ -1,12 +1,16 @@
-# Advanced React E-Commerce App with Firebase
+# Advanced React E-Commerce App with Firebase and CI/CD
 
-This project is an advanced e-commerce web app built with React, TypeScript, Vite, Redux Toolkit, React Query, and Firebase. I first built the project using the FakeStore API, and then updated it to use Firebase Authentication and Firestore for users, products, and orders.
+This project is an advanced e-commerce web app built with React, TypeScript, Vite, Redux Toolkit, React Query, Firebase, Jest, React Testing Library, GitHub Actions, and Vercel.
 
-The app allows users to register, log in, manage their profile, browse products, add products, edit and delete products, use a shopping cart, place orders, and view order history.
+I originally started this project using the FakeStore API, and then updated it to use Firebase Authentication and Firestore for users, products, and orders. After that, I added testing, a CI/CD pipeline with GitHub Actions, and deployment with Vercel.
+
+## Live Application
+
+[View the live app here](https://advanced-react-ecommerce-pink.vercel.app/)
 
 ## What This Project Does
 
-This app works like a simple online store. Users can create an account, log in, browse products, add items to their cart, and place orders. Product, user, and order data are stored in Firebase Firestore instead of using an outside API.
+This app works like a simple online store. Users can create an account, log in, browse products, add items to their cart, place orders, and view order history. Product, user, and order data are stored in Firebase Firestore.
 
 Main features include:
 
@@ -26,24 +30,9 @@ Main features include:
 - placing orders and saving them in Firestore
 - viewing order history
 - viewing individual order details
-- showing real fallback product images when a product image link is missing or fails
+- showing fallback product images when a product image link is missing or fails
 
-## What I Learned
-
-This project helped me practice a lot of important React and Firebase concepts. Some of the main things I worked on were:
-
-- setting up a React project with TypeScript using Vite
-- using React Router for page navigation
-- using Redux Toolkit for cart state management
-- using React Query for data loading and refresh
-- working with Firebase Authentication
-- storing and reading data from Firestore
-- creating reusable components
-- using TypeScript interfaces for products, users, carts, and orders
-- using `sessionStorage` for cart persistence
-- debugging Firebase setup issues, image problems, and TypeScript errors
-
-## Tech Stack
+## Technologies Used
 
 This project was built with:
 
@@ -56,6 +45,10 @@ This project was built with:
 - React Query
 - Firebase Authentication
 - Firebase Firestore
+- Jest
+- React Testing Library
+- GitHub Actions
+- Vercel
 
 ## Firebase Features Used
 
@@ -66,94 +59,105 @@ This app uses Firebase for:
 - Firestore product collection
 - Firestore orders collection
 
-## Project Structure
+## Testing
 
-Here is the main folder structure used in this project:
+This project includes both unit and integration testing.
 
-- `src/components` for reusable UI components
-- `src/pages` for page components
-- `src/store` for Redux Toolkit state
-- `src/firebase` for Firebase config and Firestore functions
-- `src/context` for authentication context
-- `src/types` for shared TypeScript types
-- `src/utils` for helper functions like product image fallbacks
+### Unit
 
-## How to Run the Project
+CI/CD
+This project includes a CI/CD pipeline using GitHub Actions and Vercel.
 
-1. Clone the repository.
-2. Open the project folder.
-3. Install dependencies:
+Continuous Integration
+GitHub Actions automatically:
 
-```bash
+installs dependencies
+runs the Jest test suite
+builds the app
+This workflow runs on pushes to the main branch.
+
+Continuous Deployment
+After tests and build pass successfully, the app is deployed to Vercel.
+
+Project Structure
+Main folders used in this project:
+
+src/components for reusable UI components
+src/pages for page components
+src/store for Redux Toolkit state
+src/firebase for Firebase config and Firestore functions
+src/context for authentication context
+src/types for shared TypeScript types
+src/utils for helper functions like product image fallbacks
+src/test for test files
+How to Run the Project Locally
+Clone the repository.
+Open the project folder.
+Install dependencies:
 npm install
-```
-
-4. Start the development server:
-
-```bash
+Start the development server:
 npm run dev
-```
-
-5. Open the local Vite URL in your browser.
-
-## Firebase Setup
-
+Open the local Vite URL in your browser.
+Firebase Setup
 To run this project, Firebase must be set up first.
 
-### Firebase steps
-
-1. Create a Firebase project in the Firebase Console.
-2. Add a web app to the Firebase project.
-3. Enable Authentication.
-4. Enable Email/Password sign-in.
-5. Create a Firestore Database.
-6. Add your Firebase config to the project.
-
-### Firestore collections used
-
-- `users`
-- `products`
-- `orders`
-
-### Firestore rules for testing
-
+Firebase Steps
+Create a Firebase project in the Firebase Console.
+Add a web app to the Firebase project.
+Enable Authentication.
+Enable Email/Password sign-in.
+Create a Firestore Database.
+Add your Firebase config to the project.
+Firestore Collections Used
+users
+products
+orders
+Firestore Rules for Testing
 During development, Firestore may need test rules enabled so reads and writes work while building the app.
 
-## How to Use the App
+How to Use the App
+Register a new account.
+Log in with your email and password.
+Browse products on the Home page.
+Use the Add Product page to create products.
+Edit or delete products from the product list.
+Add products to the cart.
+Open the cart page to review items.
+Remove items if needed.
+Checkout to place an order.
+Open the Orders page to view previous orders.
+Open the Profile page to update your name and address.
+Notes
+This app includes product image fallback handling. If a product image URL does not load, the app switches to a fallback product image so the layout still looks clean.
 
-1. Register a new account.
-2. Log in with your email and password.
-3. Browse products on the Home page.
-4. Use the Add Product page to create products.
-5. Edit or delete products from the product list.
-6. Add products to the cart.
-7. Open the cart page to review items.
-8. Remove items if needed.
-9. Checkout to place an order.
-10. Open the Orders page to view previous orders.
-11. Open the Profile page to update your name and address.
-
-## Notes
-
-This app includes product image fallback handling. If a product image URL does not load, the app switches to a real product-style fallback image based on the product category so the layout still looks clean.
-
-The cart is stored in `sessionStorage`, so cart items remain after refreshing the page until checkout clears the cart.
+The cart is stored in sessionStorage, so cart items remain after refreshing the page until checkout clears the cart.
 
 Order timestamps in Firestore may briefly show as pending right after checkout until Firebase finishes writing the server timestamp.
 
-## Future Improvements
+What I Learned
+This project helped me practice a lot of important React and Firebase concepts. Some of the main things I worked on were:
 
+setting up a React project with TypeScript using Vite
+using React Router for page navigation
+using Redux Toolkit for cart state management
+using React Query for data loading and refresh
+working with Firebase Authentication
+storing and reading data from Firestore
+creating reusable components
+writing unit and integration tests
+setting up GitHub Actions for CI/CD
+deploying a React app with Vercel
+debugging Firebase setup issues, image problems, test setup issues, and TypeScript errors
+Future Improvements
 If I continue working on this project later, some things I would like to improve are:
 
-- add stronger Firestore security rules
-- restrict product management to admin users only
-- improve product image handling with Firebase Storage
-- add better validation messages for forms
-- improve styling and responsiveness more
-- add loading spinners and better success and error states
-- add search and category filtering back into the Firebase version
-- add tests
-
-## Author
-
-Created by Kimberly Gadeberg as a learning project for an advanced React e-commerce assignment using Firebase.
+add stronger Firestore security rules
+restrict product management to admin users only
+improve product image handling with Firebase Storage
+add better validation messages for forms
+improve styling and responsiveness more
+add loading spinners and better success and error states
+add search and category filtering back into the Firebase version
+add more tests
+Author
+Created by Kimberly Gadeberg as a learning project for an advanced React e-commerce assignment using Firebase, testing, CI/CD, and Vercel deployment.
