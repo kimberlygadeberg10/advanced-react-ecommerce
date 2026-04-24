@@ -4,11 +4,10 @@ import {
   doc,
   getDoc,
   getDocs,
-  orderBy,
-  query,
   serverTimestamp,
-  where,
   type Timestamp,
+  query,
+  where,
 } from "firebase/firestore";
 import { db } from "./config";
 import type { CartItem } from "../store/cartSlice";
@@ -39,18 +38,21 @@ export async function createOrder(order: CreateOrderInput) {
 }
 
 export async function getUserOrders(userId: string) {
-  const ordersQuery = query(
-    ordersCollection,
-    where("userId", "==", userId),
-    orderBy("createdAt", "desc"),
-  );
+  const ordersQuery = query(ordersCollection, where("userId", "==", userId));
 
   const snapshot = await getDocs(ordersQuery);
 
-  return snapshot.docs.map((orderDoc) => ({
+  const orders = snapshot.docs.map((orderDoc) => ({
     id: orderDoc.id,
     ...orderDoc.data(),
   })) as Order[];
+
+  return orders.sort((firstOrder, secondOrder) => {
+    const firstSeconds = firstOrder.createdAt?.seconds ?? 0;
+    const secondSeconds = secondOrder.createdAt?.seconds ?? 0;
+
+    return secondSeconds - firstSeconds;
+  });
 }
 
 export async function getOrderById(orderId: string) {
