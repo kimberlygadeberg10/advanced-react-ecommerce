@@ -6,11 +6,11 @@ module.exports = {
     "\\.(css|less|sass|scss)$": "identity-obj-proxy",
     "\\.(svg|png|jpg|jpeg|gif|webp)$": "<rootDir>/src/test/fileMock.ts",
   },
-  transform: {
+      transform: {
     "^.+\\.(ts|tsx)$": [
       "ts-jest",
       {
-        tsconfig: "<rootDir>/tsconfig.app.json",
+        tsconfig: "<rootDir>/tsconfig.test.json",
       },
     ],
   },
