@@ -1,11 +1,12 @@
 {
     "extends": "./tsconfig.app.json",
-    "compilerOptions": {
-        "module": "commonjs",
-        "moduleResolution": "node",
-        "verbatimModuleSyntax": false,
-        "esModuleInterop": true,
-        "jsx": "react-jsx"
-    },
+  "compilerOptions": {
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "verbatimModuleSyntax": false,
+    "esModuleInterop": true,
+    "jsx": "react-jsx",
+    "types": ["jest", "node", "@testing-library/jest-dom"]
+  },
     "include": ["src", "jest.setup.ts"]
 }
